@@ -1,5 +1,9 @@
+from collections.abc import AsyncIterator, Sequence
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+
 from config import settings
 
 
@@ -13,25 +17,26 @@ class Hero(SQLModel, table=True):
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
 
-def create_db_and_tables():
+def create_db_and_tables() -> None:
     SQLModel.metadata.create_all(engine)
 
 
-app = FastAPI()
-
-
-@app.on_event("startup")
-def on_startup():
+@asynccontextmanager
+async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     create_db_and_tables()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.get("/")
-def hello():
+def hello() -> str:
     return "Hello, Docker!"
 
 
 @app.post("/heroes/")
-def create_hero(hero: Hero):
+def create_hero(hero: Hero) -> Hero:
     with Session(engine) as session:
         session.add(hero)
         session.commit()
@@ -40,7 +45,7 @@ def create_hero(hero: Hero):
 
 
 @app.get("/heroes/")
-def read_heroes():
+def read_heroes() -> Sequence[Hero]:
     with Session(engine) as session:
         heroes = session.exec(select(Hero)).all()
         return heroes

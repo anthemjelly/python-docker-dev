@@ -1,11 +1,10 @@
 import os
-
 from typing import Any
 
 from pydantic import (
     PostgresDsn,
     computed_field,
-    validator,
+    field_validator,
     model_validator,
 )
 from pydantic_core import MultiHostUrl
@@ -23,17 +22,23 @@ class Settings(BaseSettings):
     @model_validator(mode="before")
     @classmethod
     def check_postgres_password(cls, data: Any) -> Any:
+        """Validate that either POSTGRES_PASSWORD or POSTGRES_PASSWORD_FILE is set."""
         if isinstance(data, dict):
-            if data.get("POSTGRES_PASSWORD_FILE") is None and data.get("POSTGRES_PASSWORD") is None:
-                raise ValueError("At least one of POSTGRES_PASSWORD_FILE and POSTGRES_PASSWORD must be set.")
-        return data
+            password_file: str | None = data.get("POSTGRES_PASSWORD_FILE")  # type: ignore
+            password: str | None = data.get("POSTGRES_PASSWORD")  # type: ignore
+            if password_file is None and password is None:
+                raise ValueError(
+                    "At least one of POSTGRES_PASSWORD_FILE and POSTGRES_PASSWORD must be set."
+                )
+        return data  # type: ignore
 
-    @validator('POSTGRES_PASSWORD_FILE', pre=True, always=True)
-    def read_password_from_file(cls, v):
+    @field_validator("POSTGRES_PASSWORD_FILE", mode="before")
+    @classmethod
+    def read_password_from_file(cls, v: str | None) -> str | None:
         if v is not None:
             file_path = v
             if os.path.exists(file_path):
-                with open(file_path, 'r') as file:
+                with open(file_path) as file:
                     return file.read().strip()
             raise ValueError(f"Password file {file_path} does not exist.")
         return v
@@ -41,13 +46,17 @@ class Settings(BaseSettings):
     @computed_field
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
-        return MultiHostUrl.build(
+        url = MultiHostUrl.build(
             scheme="postgresql+psycopg",
             username=self.POSTGRES_USER,
-            password=self.POSTGRES_PASSWORD if self.POSTGRES_PASSWORD else self.POSTGRES_PASSWORD_FILE,
+            password=self.POSTGRES_PASSWORD
+            if self.POSTGRES_PASSWORD
+            else self.POSTGRES_PASSWORD_FILE,
             host=self.POSTGRES_SERVER,
             port=self.POSTGRES_PORT,
             path=self.POSTGRES_DB,
         )
+        return PostgresDsn(url)
 
-settings = Settings()
+
+settings = Settings()  # type: ignore
