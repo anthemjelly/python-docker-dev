@@ -7,4 +7,8 @@
   "exclude": [".ruff_cache", "venv", "__pycache__"]  // 排除缓存目录
   "reportMissingImports": true,
   "reportGeneralTypeIssues": true
+  "ignoreReportTypes": [
+    "reportGeneralTypeIssues",  // 忽略__init_subclass__参数的误报
+    "reportCallIssue"           // 忽略"table"参数不存在的误报
+  ],
 }
