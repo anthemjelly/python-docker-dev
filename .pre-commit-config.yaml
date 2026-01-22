@@ -3,17 +3,20 @@
 repos:
   # 1. Ruff：代码格式化+语法检查
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.2.2  # 和你安装的Ruff版本一致
+    rev: v0.2.2
     hooks:
       - id: ruff
-        args: [--no-cache, --fix]  # 自动修复可修复的错误
-
-  # 2. pyright：类型检查
+        args: [--no-cache, --fix]
+  # 2. pyright：类型检查（核心修改）
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.357  # pyright版本
+    rev: v1.1.408  # 关键：升级到最新版，解决SQLModel兼容问题
     hooks:
       - id: pyright
-        args: []  # 避开权限问题
+        args: []
+        additional_dependencies: []  # 禁用pre-commit的独立依赖安装
+        env:
+          PYRIGHT_PYTHON_FORCE_VERSION: latest  # 强制使用最新版
+          PYTHONPATH: ${{ github.workspace }}  # 告诉pyright依赖路径
 
 # 配置说明：
 # - repo：插件仓库地址

@@ -1,14 +1,15 @@
 {
-  "venvPath": ".",  // 容器内的虚拟环境路径（你的项目目录）
+  "venvPath": ".",
   "venv": "venv",
-  "pythonVersion": "3.12",  // 和你的Docker镜像一致
-  "strict": [],  // 新手先关严格模式，避免太多无关提示
-  "reportMissingTypeStubs": false,  // 忽略「缺少类型库」的提示
-  "exclude": [".ruff_cache", "venv", "__pycache__"]  // 排除缓存目录
+  "pythonVersion": "3.12",
+  "strict": [],
+  "reportMissingTypeStubs": false,
+  "exclude": [".ruff_cache", "venv", "__pycache__"],
   "reportMissingImports": true,
-  "reportGeneralTypeIssues": true
+  "reportGeneralTypeIssues": true,
   "ignoreReportTypes": [
-    "reportGeneralTypeIssues",  // 忽略__init_subclass__参数的误报
-    "reportCallIssue"           // 忽略"table"参数不存在的误报
+    "reportGeneralTypeIssues",
+    "reportCallIssue"
   ],
+  "pythonPlatform": "Linux"
 }
