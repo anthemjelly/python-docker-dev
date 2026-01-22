@@ -13,7 +13,7 @@ repos:
     rev: v1.1.357  # pyright版本
     hooks:
       - id: pyright
-        args: [--no-cache]  # 避开权限问题
+        args: []  # 避开权限问题
 
 # 配置说明：
 # - repo：插件仓库地址
