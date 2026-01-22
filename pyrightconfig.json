@@ -1,6 +1,6 @@
 {
   "pythonVersion": "3.12",
-  "strict": false,
+  "strict": [],
   "exclude": [".ruff_cache", "venv", "__pycache__"],
   "pythonPlatform": "Linux"
 }
