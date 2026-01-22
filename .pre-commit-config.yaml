@@ -14,9 +14,6 @@ repos:
       - id: pyright
         args: []
         additional_dependencies: []  # 禁用pre-commit的独立依赖安装
-        env:
-          PYRIGHT_PYTHON_FORCE_VERSION: latest  # 强制使用最新版
-          PYTHONPATH: ${{ github.workspace }}  # 告诉pyright依赖路径
 
 # 配置说明：
 # - repo：插件仓库地址
