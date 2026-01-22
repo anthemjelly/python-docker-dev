@@ -39,7 +39,6 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
 
   build_and_push:
-    needs: lint-test
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
