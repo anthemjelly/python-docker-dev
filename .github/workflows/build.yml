@@ -26,7 +26,7 @@ jobs:
 
       - name: Run pyright
         run: |
-          export PYRIGHT_PYTHON_FORCE_VERSION=latest
+          pip install pyright@latest
           pyright
         env:
           PYTHONPATH: ${{ github.workspace }}
