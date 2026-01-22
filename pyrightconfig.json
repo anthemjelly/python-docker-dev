@@ -1,6 +1,6 @@
 {
   "pythonVersion": "3.12",  // 和项目Python版本一致
-  "strict": false,  // 新手直接关严格模式（比空数组更规范）
+  "strict": [],  // 新手直接关严格模式（比空数组更规范）
   "reportMissingTypeStubs": false,  // 忽略缺少类型库的提示
   "exclude": [".ruff_cache", "venv", "__pycache__"],  // 排除缓存目录
   "reportMissingImports": true,
