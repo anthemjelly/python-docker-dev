@@ -25,7 +25,11 @@ jobs:
         run: pre-commit run --all-files
 
       - name: Run pyright
-        run: pyright
+        run: |
+          export PYRIGHT_PYTHON_FORCE_VERSION=latest
+          pyright
+        env:
+          PYTHONPATH: ${{ github.workspace }}
 
   build_and_push:
     needs: lint-test
