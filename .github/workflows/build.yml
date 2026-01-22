@@ -20,16 +20,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pre-commit pyright==1.1.408  # 统一安装1.1.408版本，避免版本冲突
-          pre-commit install
-          # 打印依赖安装路径，确保pyright能找到（可选，用于验证）
-          echo "依赖安装路径：$(python -c 'import site; print(site.getsitepackages()[0])')"
+          pip install pre-commit  # 确保pre-commit用的是当前环境的Python
+          pre-commit install  # 安装pre-commit的hook依赖
 
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
         env:
-          # 强制传递PYTHONPATH，包含依赖安装路径
-          PYTHONPATH: "${{ github.workspace }}:$(python -c 'import site; print(site.getsitepackages()[0])')"
+          PYTHONPATH: ${{ github.workspace }}  # 告诉pyright依赖的安装路径（关键兜底）
+          PYRIGHT_PYTHON_FORCE_VERSION: latest  # 强制使用最新版pyright（通过环境变量生效）
 
       - name: Run pyright
         run: |

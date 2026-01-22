@@ -1,6 +1,22 @@
 {
+<<<<<<< HEAD
   "pythonVersion": "3.12",
   "strict": [],
   "exclude": [".ruff_cache", "venv", "__pycache__"],
   "pythonPlatform": "Linux"
+=======
+  "pythonVersion": "3.12",  // 和项目Python版本一致
+  "strict": [],  // 新手直接关严格模式（比空数组更规范）
+  "reportMissingTypeStubs": false,  // 忽略缺少类型库的提示
+  "exclude": [".ruff_cache", "venv", "__pycache__"],  // 排除缓存目录
+  "reportMissingImports": true,
+  "reportGeneralTypeIssues": true,
+  "pythonPlatform": "Linux",
+  // 新增：用pyright支持的「ignore」字段忽略SQLModel的误报（正确方式！）
+  "ignore": [
+    // 忽略app.py第10行的两个误报（格式：文件路径:行号:错误码）
+    "app.py:10:reportGeneralTypeIssues",
+    "app.py:10:reportCallIssue"
+  ]
+>>>>>>> 266dce9 (Revert "Big Debug 3")
 }
