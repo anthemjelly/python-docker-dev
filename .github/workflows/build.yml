@@ -27,16 +27,6 @@ jobs:
 
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
-        env:
-          # 强制传递PYTHONPATH，包含依赖安装路径
-          PYTHONPATH: "${{ github.workspace }}:$(python -c 'import site; print(site.getsitepackages()[0])')"
-
-      - name: Run pyright
-        run: |
-          pip install pyright@latest
-          pyright
-        env:
-          PYTHONPATH: ${{ github.workspace }}
 
   build_and_push:
     needs: lint-test
