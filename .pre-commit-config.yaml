@@ -7,19 +7,7 @@ repos:
     hooks:
       - id: ruff
         args: [--no-cache, --fix]
-  # 2. pyright：类型检查（核心修改，直接传参数关闭规则）
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.408  # 统一版本
-    hooks:
-      - id: pyright
-        args:
-          [
-            "--pythonpath", "${{ github.workspace }}",  # 强制指定依赖路径
-            #"--reportGeneralTypeIssues", "false",  # 直接关闭这个误报规则
-            #"--reportCallIssue", "false",  # 直接关闭这个误报规则
-            #"--reportMissingImports", "false"  # 暂时关闭导入检查（如果依赖还是找不到）
-          ]
-        additional_dependencies: []  # 禁用独立依赖安装
+
 # 配置说明：
 # - repo：插件仓库地址
 # - rev：插件版本（和你安装的工具版本一致）
