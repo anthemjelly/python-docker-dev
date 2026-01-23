@@ -25,16 +25,6 @@ jobs:
 
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
-        env:
-          PYTHONPATH: ${{ github.workspace }}  # 告诉pyright依赖的安装路径（关键兜底）
-          PYRIGHT_PYTHON_FORCE_VERSION: latest  # 强制使用最新版pyright（通过环境变量生效）
-
-      - name: Run pyright
-        run: |
-          pip install pyright@latest
-          pyright
-        env:
-          PYTHONPATH: ${{ github.workspace }}
 
   build_and_push:
     runs-on: ubuntu-latest

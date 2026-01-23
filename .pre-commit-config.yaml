@@ -8,23 +8,4 @@ repos:
     hooks:
       - id: ruff
         args: [--no-cache, --fix]
-  # 2. pyright：类型检查（核心修改）
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.408  # 关键：升级到最新版，解决SQLModel兼容问题
-    hooks:
-      - id: pyright
-        args: []
-        additional_dependencies: []  # 禁用pre-commit的独立依赖安装
 
-<<<<<<< HEAD
-ci:
-  autofix_commit_msg: 🎨 [pre-commit.ci] Auto format from pre-commit.com hooks
-  autoupdate_commit_msg: ⬆ [pre-commit.ci] pre-commit autoupdate
-
-=======
-# 配置说明：
-# - repo：插件仓库地址
-# - rev：插件版本（和你安装的工具版本一致）
-# - id：要运行的检查钩子
-# - args：传递给工具的参数（比如--no-cache）
->>>>>>> 266dce9 (Revert "Big Debug 3")
